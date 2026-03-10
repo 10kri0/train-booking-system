@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}My Bookings — RailBook{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header mb-4">
+        <h3 class="fw-bold"><i class="bi bi-clock-history me-2 text-primary"></i>My Booking History</h3>
+        <p class="text-muted">All your past and current train bookings.</p>
+    </div>
+
+    {% if bookings %}
+    <div class="table-responsive">
+        <table class="table table-hover align-middle shadow-sm rounded-3 overflow-hidden">
+            <thead class="table-dark">
+                <tr>
+                    <th><i class="bi bi-hash me-1"></i>Booking ID</th>
+                    <th><i class="bi bi-train-front me-1"></i>Train</th>
+                    <th>Route</th>
+                    <th>Schedule</th>
+                    <th>Seats</th>
+                    <th>Total Fare</th>
+                    <th>Booked On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>
+                        <span class="badge bg-primary px-3">#{{ "%06d"|format(booking.id) }}</span>
+                    </td>
+                    <td class="fw-semibold">{{ booking.train.train_name }}</td>
+                    <td>
+                        <span class="text-muted small">
+                            {{ booking.train.source }}
+                            <i class="bi bi-arrow-right mx-1"></i>
+                            {{ booking.train.destination }}
+                        </span>
+                    </td>
+                    <td class="small">
+                        <div>{{ booking.train.departure_time }} <i class="bi bi-arrow-right"></i> {{
+                            booking.train.arrival_time }}</div>
+                    </td>
+                    <td>
+                        <span class="badge bg-info text-dark">{{ booking.seat_count }} seat(s)</span>
+                    </td>
+                    <td class="fw-bold text-primary">₹{{ "%.2f"|format(booking.total_fare) }}</td>
+                    <td class="text-muted small">{{ booking.booking_date.strftime('%d %b %Y') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <p class="text-muted small text-end">Showing {{ bookings|length }} booking(s) — newest first.</p>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-ticket-detailed display-1 text-muted opacity-25"></i>
+        <h4 class="mt-3 text-muted fw-semibold">No Bookings Yet</h4>
+        <p class="text-muted">You haven't booked any tickets yet. Start your journey today!</p>
+        <a href="{{ url_for('user.dashboard') }}" class="btn btn-primary mt-2">
+            <i class="bi bi-search me-1"></i>Search Trains
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

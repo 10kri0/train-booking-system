@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Server Error — RailBook{% endblock %}
+{% block content %}
+<div class="container text-center py-5">
+    <div class="error-page py-5">
+        <h1 class="display-1 fw-bold text-danger">500</h1>
+        <h3 class="fw-semibold mb-3">Internal Server Error</h3>
+        <p class="text-muted mb-4">Something went wrong on our end. Please try again later.</p>
+        <a href="{{ url_for('auth.index') }}" class="btn btn-primary btn-lg px-5">
+            <i class="bi bi-house me-2"></i>Back to Home
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'admin/base_admin.html' %}
+{% block title %}Admin Profile — RailBook{% endblock %}
+{% block page_title %}My Profile{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold"><i class="bi bi-person-badge me-2"></i>Admin Profile</h6>
+                <a href="{{ url_for('admin_bp.admin_edit_profile') }}" class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-pencil me-1"></i>Edit Profile
+                </a>
+            </div>
+            <div class="card-body p-4 text-center">
+                <div class="profile-avatar mx-auto mb-3"
+                    style="background: linear-gradient(135deg, #1a237e, #283593); color:#fff;">
+                    <i class="bi bi-person-badge-fill fs-1"></i>
+                </div>
+                <h4 class="fw-bold mb-0">{{ admin.full_name }}</h4>
+                <span class="badge bg-primary mt-1 px-3">Administrator</span>
+                <hr />
+                <div class="text-start">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="p-3 bg-light rounded-3">
+                                <div class="text-muted small mb-1"><i class="bi bi-envelope me-2"></i>Email</div>
+                                <div class="fw-semibold">{{ admin.email }}</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="p-3 bg-light rounded-3">
+                                <div class="text-muted small mb-1"><i class="bi bi-calendar me-2"></i>Admin Since</div>
+                                <div class="fw-semibold">{{ admin.created_at.strftime('%d %B %Y') }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

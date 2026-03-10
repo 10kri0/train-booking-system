@@ -1,0 +1,72 @@
+{% extends 'admin/base_admin.html' %}
+{% block title %}Add Train — Admin{% endblock %}
+{% block page_title %}Add New Train{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-3">
+                <h6 class="mb-0 fw-bold"><i class="bi bi-plus-circle me-2 text-primary"></i>Add New Train</h6>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" action="{{ url_for('admin_bp.add_train') }}">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="train_name" class="form-label fw-medium">Train Name / Number</label>
+                            <input type="text" class="form-control" id="train_name" name="train_name"
+                                placeholder="e.g. Rajdhani Express" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="source" class="form-label fw-medium">Source Station</label>
+                            <input type="text" class="form-control" id="source" name="source" list="stationList"
+                                placeholder="Departure station" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="destination" class="form-label fw-medium">Destination Station</label>
+                            <input type="text" class="form-control" id="destination" name="destination"
+                                list="stationList" placeholder="Arrival station" required />
+                        </div>
+                        <datalist id="stationList">
+                            {% for station in stations %}
+                            <option value="{{ station.name }}">{{ station.city }}</option>
+                            {% endfor %}
+                        </datalist>
+                        <div class="col-md-6">
+                            <label for="departure_time" class="form-label fw-medium">Departure Time</label>
+                            <input type="time" class="form-control" id="departure_time" name="departure_time"
+                                required />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="arrival_time" class="form-label fw-medium">Arrival Time</label>
+                            <input type="time" class="form-control" id="arrival_time" name="arrival_time" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="total_seats" class="form-label fw-medium">Total Seats</label>
+                            <input type="number" class="form-control" id="total_seats" name="total_seats" min="1"
+                                placeholder="e.g. 200" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="fare" class="form-label fw-medium">Fare per Seat (₹)</label>
+                            <div class="input-group">
+                                <span class="input-group-text">₹</span>
+                                <input type="number" class="form-control" id="fare" name="fare" min="1" step="0.01"
+                                    placeholder="e.g. 1500" required />
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4" />
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary px-4 fw-semibold">
+                            <i class="bi bi-plus-lg me-1"></i>Add Train
+                        </button>
+                        <a href="{{ url_for('admin_bp.view_trains') }}" class="btn btn-outline-secondary px-4">
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

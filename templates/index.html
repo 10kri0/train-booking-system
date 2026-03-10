@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Welcome — RailBook{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center min-vh-70">
+            <div class="col-lg-6">
+                <div class="hero-badge mb-3">
+                    <i class="bi bi-lightning-charge-fill me-1"></i> Fast & Easy Booking
+                </div>
+                <h1 class="hero-title">Travel Smarter with <span class="text-accent">RailBook</span></h1>
+                <p class="hero-subtitle">
+                    Search trains, check availability, compare fares, and book tickets
+                    — all in one place. Your journey starts here.
+                </p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-accent btn-lg px-4">
+                        <i class="bi bi-person-plus me-2"></i>Get Started Free
+                    </a>
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-outline-light btn-lg px-4">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center mt-5 mt-lg-0">
+                <div class="hero-illustration">
+                    <i class="bi bi-train-front" style="font-size: 10rem; opacity: 0.15;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center fw-bold mb-5">Everything You Need to Travel</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card h-100 p-4 text-center rounded-3 shadow-sm">
+                    <div class="feature-icon mb-3"><i class="bi bi-search"></i></div>
+                    <h5 class="fw-semibold">Search Trains</h5>
+                    <p class="text-muted">Find trains between any two stations instantly. View schedules, seats, and
+                        fares side by side.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card h-100 p-4 text-center rounded-3 shadow-sm">
+                    <div class="feature-icon mb-3"><i class="bi bi-ticket-detailed"></i></div>
+                    <h5 class="fw-semibold">Easy Booking</h5>
+                    <p class="text-muted">Book your seats in seconds. Choose the number of seats and confirm your
+                        journey instantly.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card h-100 p-4 text-center rounded-3 shadow-sm">
+                    <div class="feature-icon mb-3"><i class="bi bi-clock-history"></i></div>
+                    <h5 class="fw-semibold">Booking History</h5>
+                    <p class="text-muted">Track all your past and current bookings in one convenient place.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

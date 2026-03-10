@@ -1,0 +1,212 @@
+/* ============================================================
+   RailBook — Custom Stylesheet
+   Layered on top of Bootstrap 5
+   ============================================================ */
+
+/* ── CSS Variables ────────────────────────────────────────── */
+:root {
+  --primary:       #1a237e;
+  --primary-light: #3949ab;
+  --accent:        #ff6f00;
+  --accent-hover:  #e65100;
+  --success:       #2e7d32;
+  --surface:       #ffffff;
+  --bg:            #f4f6f9;
+  --text:          #212529;
+  --muted:         #6c757d;
+  --border:        #dee2e6;
+  --shadow:        0 2px 16px rgba(0, 0, 0, 0.08);
+  --radius:        12px;
+  --radius-sm:     8px;
+  --font:          'Inter', sans-serif;
+}
+
+/* ── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main { flex: 1; }
+
+/* ── Typography ───────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 { font-weight: 600; }
+.tiny { font-size: 0.72rem; }
+.text-purple { color: #6a1b9a !important; }
+
+/* ── Navbar ───────────────────────────────────────────────── */
+#mainNav {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  padding: 10px 0;
+}
+#mainNav .navbar-brand { font-size: 1.3rem; letter-spacing: -0.3px; }
+#mainNav .nav-link { color: rgba(255,255,255,0.85) !important; font-weight: 500; transition: color 0.2s; border-radius: 6px; padding: 6px 12px !important; }
+#mainNav .nav-link:hover { color: #ffffff !important; background: rgba(255,255,255,0.12); }
+#mainNav .dropdown-menu { border: none; box-shadow: var(--shadow); border-radius: var(--radius-sm); }
+#mainNav .dropdown-item:hover { background: #f0f2ff; color: var(--primary); }
+
+/* ── Accent Button ────────────────────────────────────────── */
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.1s;
+}
+.btn-accent:hover { background: var(--accent-hover); color: #fff; transform: translateY(-1px); }
+
+/* Bootstrap primary override */
+.btn-primary { background: var(--primary); border-color: var(--primary); }
+.btn-primary:hover { background: var(--primary-light); border-color: var(--primary-light); }
+
+/* ── Hero Section ─────────────────────────────────────────── */
+.hero-section {
+  background: linear-gradient(135deg, var(--primary) 0%, #283593 50%, #1565c0 100%);
+  color: #fff;
+  padding: 80px 0 60px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: -50%; right: -10%;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  backdrop-filter: blur(4px);
+}
+.hero-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.15; margin-bottom: 20px; }
+.hero-subtitle { font-size: 1.1rem; opacity: 0.85; margin-bottom: 32px; max-width: 480px; }
+.text-accent { color: #ffab40 !important; }
+.min-vh-70 { min-height: 70vh; }
+
+/* ── Feature Cards ────────────────────────────────────────── */
+.feature-card {
+  background: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-top: 3px solid transparent;
+}
+.feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow) !important; border-top-color: var(--primary); }
+.feature-icon { font-size: 2.5rem; color: var(--primary); }
+
+/* ── Auth Card ────────────────────────────────────────────── */
+.auth-card { border-radius: var(--radius); overflow: hidden; background: #fff; }
+.auth-card-header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: #fff;
+  padding: 30px 20px 24px;
+}
+.auth-card-body { background: #fff; }
+
+/* ── Dashboard Welcome ────────────────────────────────────── */
+.dashboard-welcome {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: #fff;
+}
+.avatar-circle {
+  width: 56px; height: 56px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── Quick Cards ──────────────────────────────────────────── */
+.quick-card-inner {
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: var(--radius) !important;
+}
+.quick-card-inner:hover { transform: translateY(-3px); box-shadow: var(--shadow) !important; }
+
+/* ── Route Header ─────────────────────────────────────────── */
+.route-header { background: #fff; border-left: 4px solid var(--primary); }
+
+/* ── Train Card ───────────────────────────────────────────── */
+.train-card {
+  border-radius: var(--radius) !important;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.train-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.1) !important; }
+
+/* ── Orange Badge ─────────────────────────────────────────── */
+.bg-orange { background-color: #e65100 !important; color: #fff; }
+
+/* ── Fare Preview ─────────────────────────────────────────── */
+.fare-preview {
+  background: linear-gradient(135deg, #e8eaf6, #f3f4fb);
+  border: 1px solid #c5cae9;
+}
+
+/* ── Profile ──────────────────────────────────────────────── */
+.profile-avatar {
+  width: 90px; height: 90px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.profile-field { transition: background 0.2s; }
+.profile-field:hover { background: #e8eaf6 !important; }
+
+/* ── Train Summary Card ───────────────────────────────────── */
+.train-summary-card .card-header { border-bottom: none; }
+
+/* ── Tables ───────────────────────────────────────────────── */
+.table th { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.table tbody tr { transition: background 0.15s; }
+.table-hover tbody tr:hover { background-color: #f0f2ff; }
+
+/* ── Footer ───────────────────────────────────────────────── */
+.footer {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: rgba(255,255,255,0.8);
+  margin-top: auto;
+}
+.footer p { color: rgba(255,255,255,0.7); }
+
+/* ── Page Header ──────────────────────────────────────────── */
+.page-header { border-bottom: 2px solid #f0f2ff; padding-bottom: 12px; }
+
+/* ── Swap Button ──────────────────────────────────────────── */
+.swap-btn { border-radius: 50% !important; width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center; }
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero-section { padding: 50px 0 40px; }
+  .hero-title { font-size: 1.8rem; }
+  .admin-main { margin-left: 0; }
+}
+
+/* ── Animations ───────────────────────────────────────────── */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.alert { animation: fadeInDown 0.3s ease; }
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #c5cae9; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }

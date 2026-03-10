@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}Check Fare — RailBook{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header mb-4">
+        <h3 class="fw-bold"><i class="bi bi-currency-rupee me-2 text-primary"></i>Check Train Fare</h3>
+        <p class="text-muted">Find out the fare between any two stations before booking.</p>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4">
+            <form method="POST" action="{{ url_for('user.check_fare') }}">
+                <div class="row g-3">
+                    <div class="col-md-5">
+                        <label for="source" class="form-label fw-medium">From Station</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                            <input type="text" class="form-control" id="source" name="source" value="{{ source }}"
+                                list="stationList" placeholder="e.g. Delhi" required />
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="destination" class="form-label fw-medium">To Station</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                            <input type="text" class="form-control" id="destination" name="destination"
+                                value="{{ destination }}" list="stationList" placeholder="e.g. Mumbai" required />
+                        </div>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100 fw-semibold">
+                            <i class="bi bi-search me-1"></i>Check
+                        </button>
+                    </div>
+                </div>
+                <datalist id="stationList">
+                    {% for station in stations %}
+                    <option value="{{ station.name }}">{{ station.city }}</option>
+                    {% endfor %}
+                </datalist>
+            </form>
+        </div>
+    </div>
+
+    {% if trains %}
+    <h5 class="mb-3 fw-semibold">
+        Fares from <span class="text-primary">{{ source }}</span>
+        to <span class="text-primary">{{ destination }}</span>
+    </h5>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle shadow-sm rounded-3 overflow-hidden">
+            <thead class="table-dark">
+                <tr>
+                    <th><i class="bi bi-train-front me-1"></i>Train Name</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Available Seats</th>
+                    <th>Fare / Seat</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for train in trains %}
+                <tr>
+                    <td class="fw-semibold">{{ train.train_name }}</td>
+                    <td>{{ train.departure_time }}</td>
+                    <td>{{ train.arrival_time }}</td>
+                    <td>
+                        {% if train.available_seats == 0 %}
+                        <span class="badge bg-danger">Fully Booked</span>
+                        {% else %}
+                        <span class="badge bg-success">{{ train.available_seats }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="fw-bold text-primary fs-6">₹{{ "%.2f"|format(train.fare) }}</td>
+                    <td>
+                        {% if train.available_seats > 0 %}
+                        <a href="{{ url_for('user.book_ticket', train_id=train.id) }}" class="btn btn-sm btn-primary">
+                            <i class="bi bi-ticket-perforated me-1"></i>Book
+                        </a>
+                        {% else %}
+                        <button class="btn btn-sm btn-secondary" disabled>Fully Booked</button>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

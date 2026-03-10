@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Admin Panel — RailBook{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f6f9;
+        }
+
+        .admin-sidebar {
+            min-height: 100vh;
+            width: 250px;
+            background: linear-gradient(180deg, #1a237e 0%, #283593 100%);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            padding-top: 20px;
+            transition: transform 0.3s;
+        }
+
+        .admin-sidebar .brand {
+            color: #fff;
+            padding: 16px 20px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.75);
+            padding: 10px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-right: 12px;
+            transition: all 0.2s;
+        }
+
+        .admin-sidebar .nav-link:hover,
+        .admin-sidebar .nav-link.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .admin-sidebar .nav-link i {
+            width: 22px;
+        }
+
+        .admin-main {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        .admin-topbar {
+            background: #fff;
+            border-bottom: 1px solid #e9ecef;
+            padding: 12px 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        .admin-content {
+            padding: 24px;
+        }
+
+        .stat-card {
+            border-radius: 12px;
+            border: none;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+            }
+
+            .admin-main {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <nav class="admin-sidebar">
+        <div class="brand">
+            <i class="bi bi-train-front-fill me-2 fs-5"></i>
+            <span class="fw-bold fs-5">RailBook Admin</span>
+        </div>
+        <ul class="nav flex-column mt-2">
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint == 'admin_bp.dashboard' %}active{% endif %}"
+                    href="{{ url_for('admin_bp.dashboard') }}">
+                    <i class="bi bi-speedometer2 me-2"></i>Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint in ['admin_bp.view_trains', 'admin_bp.add_train', 'admin_bp.edit_train'] %}active{% endif %}"
+                    href="{{ url_for('admin_bp.view_trains') }}">
+                    <i class="bi bi-train-front me-2"></i>Manage Trains
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.endpoint == 'admin_bp.add_train' %}active{% endif %}"
+                    href="{{ url_for('admin_bp.add_train') }}">
+                    <i class="bi bi-plus-circle me-2"></i>Add Train
+                </a>
+            </li>
+            <li class="nav-item mt-3" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px;">
+                <a class="nav-link {% if request.endpoint == 'admin_bp.admin_profile' %}active{% endif %}"
+                    href="{{ url_for('admin_bp.admin_profile') }}">
+                    <i class="bi bi-person-circle me-2"></i>My Profile
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-danger-emphasis" href="{{ url_for('admin_bp.admin_logout') }}">
+                    <i class="bi bi-box-arrow-left me-2"></i>Logout
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="admin-main">
+        <!-- Topbar -->
+        <div class="admin-topbar d-flex justify-content-between align-items-center">
+            <span class="fw-semibold text-muted">
+                {% block page_title %}Admin Panel{% endblock %}
+            </span>
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-person-badge text-primary me-1"></i>
+                <span class="small fw-medium">{{ session.get('admin_name', 'Admin') }}</span>
+            </div>
+        </div>
+
+        <!-- Flash Messages -->
+        <div class="px-4 pt-3">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
+
+        <div class="admin-content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,152 @@
+{% extends 'admin/base_admin.html' %}
+{% block title %}Dashboard — Admin{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<!-- Stats Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-sm-6 col-xl-3">
+        <div class="stat-card shadow-sm bg-white d-flex align-items-center gap-3 p-4">
+            <div class="rounded-circle d-flex align-items-center justify-content-center"
+                style="width:56px;height:56px;background:#e8eaf6;">
+                <i class="bi bi-train-front-fill fs-3 text-primary"></i>
+            </div>
+            <div>
+                <div class="text-muted small">Total Trains</div>
+                <div class="fs-2 fw-bold">{{ total_trains }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="stat-card shadow-sm bg-white d-flex align-items-center gap-3 p-4">
+            <div class="rounded-circle d-flex align-items-center justify-content-center"
+                style="width:56px;height:56px;background:#e8f5e9;">
+                <i class="bi bi-check-circle-fill fs-3 text-success"></i>
+            </div>
+            <div>
+                <div class="text-muted small">Active Trains</div>
+                <div class="fs-2 fw-bold text-success">{{ active_trains }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="stat-card shadow-sm bg-white d-flex align-items-center gap-3 p-4">
+            <div class="rounded-circle d-flex align-items-center justify-content-center"
+                style="width:56px;height:56px;background:#fce4ec;">
+                <i class="bi bi-x-circle-fill fs-3 text-danger"></i>
+            </div>
+            <div>
+                <div class="text-muted small">Cancelled Trains</div>
+                <div class="fs-2 fw-bold text-danger">{{ cancelled_trains }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="stat-card shadow-sm bg-white d-flex align-items-center gap-3 p-4">
+            <div class="rounded-circle d-flex align-items-center justify-content-center"
+                style="width:56px;height:56px;background:#e3f2fd;">
+                <i class="bi bi-ticket-detailed-fill fs-3 text-info"></i>
+            </div>
+            <div>
+                <div class="text-muted small">Total Bookings</div>
+                <div class="fs-2 fw-bold text-info">{{ total_bookings }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="stat-card shadow-sm bg-white d-flex align-items-center gap-3 p-4">
+            <div class="rounded-circle d-flex align-items-center justify-content-center"
+                style="width:56px;height:56px;background:#f3e5f5;">
+                <i class="bi bi-people-fill fs-3 text-purple"></i>
+            </div>
+            <div>
+                <div class="text-muted small">Total Users</div>
+                <div class="fs-2 fw-bold text-purple">{{ total_users }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row g-4 mb-4">
+    <div class="col-md-2">
+        <a href="{{ url_for('admin_bp.add_train') }}" class="text-decoration-none">
+            <div class="card border-0 shadow-sm h-100 text-center p-4 quick-card-inner">
+                <i class="bi bi-plus-circle-fill fs-1 text-primary mb-2"></i>
+                <h6 class="fw-bold mb-0">Add Train</h6>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-2">
+        <a href="{{ url_for('admin_bp.view_trains') }}" class="text-decoration-none">
+            <div class="card border-0 shadow-sm h-100 text-center p-4 quick-card-inner">
+                <i class="bi bi-list-ul fs-1 text-success mb-2"></i>
+                <h6 class="fw-bold mb-0">Trains</h6>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-2">
+        <a href="{{ url_for('admin_bp.view_bookings') }}" class="text-decoration-none">
+            <div class="card border-0 shadow-sm h-100 text-center p-4 quick-card-inner">
+                <i class="bi bi-ticket-detailed fs-1 text-info mb-2"></i>
+                <h6 class="fw-bold mb-0">Bookings</h6>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-2">
+        <a href="{{ url_for('admin_bp.view_users') }}" class="text-decoration-none">
+            <div class="card border-0 shadow-sm h-100 text-center p-4 quick-card-inner">
+                <i class="bi bi-people fs-1 text-purple mb-2"></i>
+                <h6 class="fw-bold mb-0">Users</h6>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-2">
+        <a href="{{ url_for('admin_bp.admin_profile') }}" class="text-decoration-none">
+            <div class="card border-0 shadow-sm h-100 text-center p-4 quick-card-inner">
+                <i class="bi bi-person-gear fs-1 text-warning mb-2"></i>
+                <h6 class="fw-bold mb-0">Profile</h6>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- Recent Bookings -->
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white py-3 d-flex justify-content-between">
+        <h6 class="mb-0 fw-bold"><i class="bi bi-clock-history me-2"></i>Recent Bookings</h6>
+    </div>
+    <div class="card-body p-0">
+        {% if recent_bookings %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Booking #</th>
+                        <th>User</th>
+                        <th>Train</th>
+                        <th>Seats</th>
+                        <th>Fare</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for b in recent_bookings %}
+                    <tr>
+                        <td><span class="badge bg-primary">#{{ "%06d"|format(b.id) }}</span></td>
+                        <td>{{ b.user.full_name }}</td>
+                        <td>{{ b.train.train_name }}</td>
+                        <td>{{ b.seat_count }}</td>
+                        <td class="fw-bold text-primary">₹{{ "%.2f"|format(b.total_fare) }}</td>
+                        <td class="text-muted small">{{ b.booking_date.strftime('%d %b %Y') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-muted text-center py-4">No bookings yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
