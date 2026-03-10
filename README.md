@@ -1,323 +1,120 @@
 # 🚂 RailBook — Online Train Booking System
 
-A comprehensive full-stack web application for online train ticket booking, built with Flask and featuring both user and admin portals. Users can search for trains, book tickets, and manage their bookings, while admins can manage trains, view bookings, promote users, and oversee the system.
+RailBook is a **full-stack train ticket booking web application** built using **Flask**.
+It provides **two portals**:
 
-## 🌟 Features
+* 👤 **User Portal** – search trains, book tickets, manage bookings
+* 🛠 **Admin Portal** – manage trains, monitor bookings, and control the system
 
-### For Users
-- **User Registration & Authentication**: Secure signup and login with password hashing.
-- **Train Search**: Search trains by source, destination, and date.
-- **Ticket Booking**: Book tickets with real-time seat availability and fare calculation.
-- **Booking Management**: View booking history, cancel bookings (if allowed).
-- **Profile Management**: Update personal details and change passwords.
-- **Fare Checking**: Calculate fares without booking.
-
-### For Admins
-- **Admin Authentication**: Separate login system for administrators.
-- **Train Management**: Add, edit, view, cancel, and delete trains.
-- **Booking Oversight**: View all bookings and delete reservations (restores seats).
-- **User Management**: View all users and promote them to admin status.
-- **Dashboard Analytics**: View statistics on trains, bookings, and users.
-- **Profile Management**: Update admin details.
-
-### General Features
-- **Responsive Design**: Mobile-friendly interface using Bootstrap 5.
-- **Real-time Updates**: Dynamic fare calculation and seat availability.
-- **Security**: CSRF protection, secure password storage, and session management.
-- **Error Handling**: Custom 404 and 500 error pages.
-- **Database Seeding**: Automatic creation of sample data on first run.
-
-## 🛠 Tech Stack
-
-| Component | Technology | Description |
-|-----------|------------|-------------|
-| **Backend** | Python 3.11+ | Core programming language |
-| **Framework** | Flask 3.x | Lightweight web framework |
-| **ORM** | SQLAlchemy 3.x | Database abstraction layer |
-| **Database** | SQLite | File-based database (easy setup, no server required) |
-| **Frontend** | HTML5, CSS3, JavaScript | Standard web technologies |
-| **CSS Framework** | Bootstrap 5 | Responsive UI components |
-| **Icons** | Bootstrap Icons | Icon library |
-| **Authentication** | Flask-Login | User session management |
-| **Password Security** | Werkzeug | PBKDF2-SHA256 hashing |
-| **Environment** | python-dotenv | Configuration management |
-| **Deployment** | Docker | Containerization |
-
-## 📋 Prerequisites
-
-- Python 3.11 or higher
-- pip (Python package installer)
-- Git (for cloning the repository)
-- Docker (optional, for containerized deployment)
-
-## 🚀 Installation & Setup
-
-### Option 1: Local Development
-
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/yourusername/train-booking-system.git
-   cd train-booking-system
-   ```
-
-2. **Create Virtual Environment**
-   ```bash
-   # Windows
-   python -m venv venv
-   venv\Scripts\activate
-
-   # Linux/macOS
-   python3 -m venv venv
-   source venv/bin/activate
-   ```
-
-3. **Install Dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Run the Application**
-   ```bash
-   python app.py
-   ```
-
-5. **Access the Application**
-   - Open your browser and go to `http://localhost:5000`
-   - Default admin credentials: `admin@trainbooking.com` / `Admin@123`
-
-### Option 2: Docker Deployment
-
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/yourusername/train-booking-system.git
-   cd train-booking-system
-   ```
-
-2. **Build Docker Image**
-   ```bash
-   docker build -t railbook .
-   ```
-
-3. **Run Docker Container**
-   ```bash
-   docker run -p 5000:5000 railbook
-   ```
-
-4. **Access the Application**
-   - Open your browser and go to `http://localhost:5000`
-
-## 📁 Project Structure
-
-```
-train-booking-system/
-├── app.py                 # Flask application factory and entry point
-├── config.py              # Application configuration (database, secrets)
-├── requirements.txt       # Python dependencies
-├── Dockerfile             # Docker container configuration
-├── .dockerignore          # Files to exclude from Docker build
-├── .env.example           # Environment variables template
-├── schema.sql             # Database schema (reference)
-│
-├── models/                # SQLAlchemy ORM models
-│   ├── __init__.py
-│   ├── user.py            # User model with Flask-Login integration
-│   ├── admin.py           # Admin model
-│   ├── train.py           # Train model
-│   ├── booking.py         # Booking model
-│   └── station.py         # Station model
-│
-├── routes/                # Flask Blueprints for routing
-│   ├── __init__.py
-│   ├── auth.py            # Authentication routes (login, register, logout)
-│   ├── user.py            # User dashboard and booking routes
-│   └── admin.py           # Admin management routes
-│
-├── templates/             # Jinja2 HTML templates
-│   ├── base.html          # Base layout for user portal
-│   ├── index.html         # Landing page
-│   ├── auth/              # Authentication templates
-│   │   ├── login.html
-│   │   └── register.html
-│   ├── user/              # User portal templates
-│   │   ├── dashboard.html
-│   │   ├── search_results.html
-│   │   ├── book_ticket.html
-│   │   └── ...
-│   ├── admin/             # Admin portal templates
-│   │   ├── base_admin.html
-│   │   ├── dashboard.html
-│   │   ├── trains.html
-│   │   └── ...
-│   └── errors/            # Error page templates
-│       ├── 404.html
-│       └── 500.html
-│
-├── static/                # Static assets
-│   ├── css/
-│   │   └── style.css      # Custom styles
-│   └── js/
-│       └── main.js        # Client-side JavaScript
-│
-└── Docs/                  # Project documentation
-    ├── 01-product-requirements.md
-    ├── 02-user-stories-and-acceptance-criteria.md
-    └── ...
-```
-
-## 🗄 Database Schema
-
-The application uses SQLite with the following main tables:
-
-### Users Table
-- `id`: Primary key
-- `full_name`: User's full name
-- `email`: Unique email address
-- `phone`: Phone number
-- `password_hash`: Hashed password
-- `created_at`: Registration timestamp
-
-### Admins Table
-- `id`: Primary key
-- `full_name`: Admin's full name
-- `email`: Unique email address
-- `password_hash`: Hashed password
-- `created_at`: Creation timestamp
-
-### Trains Table
-- `id`: Primary key
-- `train_name`: Name of the train
-- `source`: Departure station
-- `destination`: Arrival station
-- `departure_time`: Departure time
-- `arrival_time`: Arrival time
-- `total_seats`: Total number of seats
-- `available_seats`: Currently available seats
-- `fare`: Ticket price
-- `status`: Active/Cancelled
-
-### Bookings Table
-- `id`: Primary key
-- `user_id`: Foreign key to users
-- `train_id`: Foreign key to trains
-- `seat_count`: Number of seats booked
-- `total_fare`: Total cost
-- `booking_date`: Booking timestamp
-
-### Stations Table
-- `id`: Primary key
-- `name`: Station name
-- `city`: City name
-- `state`: State name
-
-## 🔗 API Routes
-
-### Authentication Routes
-- `GET /`: Landing page
-- `GET/POST /register`: User registration
-- `GET/POST /login`: User login
-- `GET /logout`: User logout
-
-### User Routes (prefix: /user)
-- `GET /dashboard`: User dashboard
-- `GET /search`: Train search
-- `GET /check-fare`: Fare calculator
-- `GET/POST /book/<train_id>`: Book tickets
-- `GET /booking-confirm/<booking_id>`: Booking confirmation
-- `GET /booking-history`: Booking history
-- `GET/POST /profile`: View/edit profile
-- `GET/POST /edit-profile`: Edit profile
-- `GET/POST /change-password`: Change password
-
-### Admin Routes (prefix: /admin)
-- `GET/POST /login`: Admin login
-- `GET /logout`: Admin logout
-- `GET /dashboard`: Admin dashboard with stats
-- `GET /trains`: View all trains
-- `GET/POST /add-train`: Add new train
-- `GET/POST /edit-train/<id>`: Edit train
-- `POST /cancel-train/<id>`: Cancel train
-- `POST /delete-train/<id>`: Delete train
-- `GET /bookings`: View all bookings
-- `POST /delete-booking/<id>`: Delete booking
-- `GET /users`: View all users
-- `POST /promote-user/<id>`: Promote user to admin
-- `GET/POST /profile`: Admin profile
-- `GET/POST /edit-profile`: Edit admin profile
-
-## 🎯 Usage Guide
-
-### For Users
-1. **Register**: Create an account with your details.
-2. **Login**: Use your credentials to access the system.
-3. **Search Trains**: Enter source, destination to find available trains.
-4. **Book Tickets**: Select a train, choose seats, and confirm booking.
-5. **Manage Bookings**: View your booking history and manage reservations.
-
-### For Admins
-1. **Login**: Use admin credentials.
-2. **Dashboard**: View system statistics.
-3. **Manage Trains**: Add, edit, or remove trains from the system.
-4. **Monitor Bookings**: View all bookings and remove if necessary.
-5. **User Management**: View users and promote them to admin.
-
-## 🔧 Configuration
-
-The application uses environment variables for configuration. Copy `.env.example` to `.env` and update:
-
-```env
-SECRET_KEY=your-secret-key-here
-DEBUG=True
-```
-
-For production, set `DEBUG=False` and use a strong `SECRET_KEY`.
-
-## 🐳 Docker Details
-
-The Dockerfile uses a multi-stage build:
-- **Base Image**: `python:3.11-slim` for minimal size
-- **Dependencies**: Installed from `requirements.txt`
-- **Application**: Copied and run with `python app.py`
-- **Port**: Exposes 5000
-
-To persist database data in Docker, use volumes:
-```bash
-docker run -p 5000:5000 -v $(pwd)/data:/app/instance railbook
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Make your changes and commit: `git commit -m 'Add feature'`
-4. Push to the branch: `git push origin feature-name`
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 📞 Support
-
-If you encounter any issues or have questions:
-- Open an issue on GitHub
-- Check the documentation in the `Docs/` folder
-- Review the code comments for implementation details
-
-## 🔄 Future Enhancements
-
-- Email notifications for bookings
-- Payment gateway integration
-- Mobile app development
-- Multi-language support
-- Advanced search filters
-- Real-time seat availability
-- API endpoints for third-party integrations
+The system simulates a simplified **IRCTC-style railway reservation platform**.
 
 ---
 
-**Built with ❤️ using Flask and modern web technologies.**
+# 🌟 Features
 
-### 4. Configure environment variables
+## 👤 User Features
+
+* Secure **user registration & login**
+* **Search trains** by source and destination
+* **Real-time seat availability**
+* **Ticket booking system**
+* **Fare calculation**
+* **Booking history**
+* **Profile management**
+* **Change password**
+
+---
+
+## 🛠 Admin Features
+
+* Separate **admin authentication**
+* **Add / edit / cancel / delete trains**
+* **View and manage bookings**
+* **User management**
+* **Dashboard statistics**
+* **Admin profile management**
+
+---
+
+## ⚙ General Features
+
+* Responsive UI using **Bootstrap 5**
+* Secure authentication with **Flask-Login**
+* Password hashing using **Werkzeug**
+* Custom **404 and 500 error pages**
+* Automatic **database seeding**
+* Docker support for containerized deployment
+
+---
+
+# 🛠 Tech Stack
+
+| Component      | Technology                |
+| -------------- | ------------------------- |
+| Backend        | Python 3.11               |
+| Framework      | Flask 3.x                 |
+| ORM            | SQLAlchemy                |
+| Database       | SQLite                    |
+| Frontend       | HTML, CSS, JavaScript     |
+| CSS Framework  | Bootstrap 5               |
+| Authentication | Flask-Login               |
+| Security       | Werkzeug password hashing |
+| Environment    | python-dotenv             |
+| Deployment     | Docker                    |
+
+---
+
+# 📋 Prerequisites
+
+Make sure the following tools are installed:
+
+* Python **3.11+**
+* pip
+* Git
+* Docker *(optional)*
+
+---
+
+# 🚀 Installation & Setup
+
+## 1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/10kri0/train-booking-system.git
+cd train-booking-system
+```
+
+---
+
+## 2️⃣ Create Virtual Environment
+
+### Windows
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+### Linux / macOS
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+---
+
+## 3️⃣ Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 4️⃣ Configure Environment Variables
+
+Copy the example file:
 
 ```bash
 # Windows
@@ -328,77 +125,183 @@ cp .env.example .env
 ```
 
 Edit `.env`:
-```dotenv
-SECRET_KEY=your-random-secret-key
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your_mysql_password
-DB_NAME=train_booking_db
+
+```
+SECRET_KEY=your-secret-key
 DEBUG=True
 ```
 
-### 5. Run the application
+---
+
+## 5️⃣ Run the Application
 
 ```bash
 python app.py
 ```
 
-Open: **http://localhost:5000**
+Open your browser:
 
-> On first run, SQLAlchemy auto-creates all tables and seeds:
-> - 10 sample stations
-> - 10 sample trains
-> - Default admin account
-
----
-
-## Default Admin Credentials
-
-| Field | Value |
-|---|---|
-| URL | http://localhost:5000/admin/login |
-| Email | `admin@trainbooking.com` |
-| Password | `Admin@123` |
-
-> **Change this password** via Admin Panel → My Profile → Edit Profile after first login.
+```
+http://localhost:5000
+```
 
 ---
 
-## Features
+# 🔑 Default Admin Credentials
 
-### User Portal (`/user/`)
-- ✅ Register & login with hashed passwords
-- ✅ Search trains by source & destination
-- ✅ Check fare between stations
-- ✅ Book tickets (with real-time seat count validation)
-- ✅ Dynamic fare preview (JS: seats × fare per seat)
-- ✅ Booking confirmation with reference ID
-- ✅ Booking history (newest first)
-- ✅ View & edit profile (name, phone)
-- ✅ Change password with current password verification
+| Field    | Value                                                   |
+| -------- | ------------------------------------------------------- |
+| URL      | http://localhost:5000/admin/login                       |
+| Email    | [admin@trainbooking.com](mailto:admin@trainbooking.com) |
+| Password | Admin@123                                               |
 
-### Admin Panel (`/admin/`)
-- ✅ Separate admin login (session-based)
-- ✅ Dashboard with stats (trains, bookings, recent activity)
-- ✅ View all trains with status filter (All / Active / Cancelled)
-- ✅ Add new train with all details
-- ✅ Edit existing train (preserves booking history)
-- ✅ Cancel train (soft delete — status = 'cancelled')
-- ✅ Restore cancelled train
-- ✅ Permanently delete train
-- ✅ Edit admin profile and change password
+⚠ Change the password after first login.
 
 ---
 
-## Database Tables
+# 📁 Project Structure
 
-| Table | Description |
-|---|---|
-| `users` | Passenger accounts |
-| `admins` | Administrator accounts |
-| `trains` | Train schedule and seat inventory |
-| `bookings` | Booking records (FK → users, trains) |
-| `stations` | Station master list (for autocomplete) |
-#   t r a i n - b o o k i n g - s y s t e m 
- 
- # train-booking-system
+```
+train-booking-system
+│
+├── app.py
+├── config.py
+├── requirements.txt
+├── Dockerfile
+│
+├── models/
+│   ├── user.py
+│   ├── admin.py
+│   ├── train.py
+│   ├── booking.py
+│   └── station.py
+│
+├── routes/
+│   ├── auth.py
+│   ├── user.py
+│   └── admin.py
+│
+├── templates/
+│   ├── auth/
+│   ├── user/
+│   ├── admin/
+│   └── errors/
+│
+├── static/
+│   ├── css/
+│   └── js/
+│
+└── Docs/
+```
+
+---
+
+# 🗄 Database Tables
+
+| Table    | Description              |
+| -------- | ------------------------ |
+| users    | Passenger accounts       |
+| admins   | Administrator accounts   |
+| trains   | Train schedule and seats |
+| bookings | Booking records          |
+| stations | Station master list      |
+
+---
+
+# 🔗 Main Routes
+
+### Authentication
+
+```
+GET  /
+GET  /login
+POST /login
+GET  /register
+POST /register
+GET  /logout
+```
+
+### User Routes
+
+```
+/user/dashboard
+/user/search
+/user/check-fare
+/user/book/<train_id>
+/user/booking-history
+/user/profile
+```
+
+### Admin Routes
+
+```
+/admin/login
+/admin/dashboard
+/admin/trains
+/admin/add-train
+/admin/edit-train/<id>
+/admin/bookings
+/admin/users
+```
+
+---
+
+# 🐳 Docker Deployment
+
+Build image:
+
+```bash
+docker build -t railbook .
+```
+
+Run container:
+
+```bash
+docker run -p 5000:5000 railbook
+```
+
+Open:
+
+```
+http://localhost:5000
+```
+
+---
+
+# 🔮 Future Enhancements
+
+* Payment gateway integration
+* Email notifications
+* Mobile app support
+* Multi-language support
+* Advanced train search filters
+* REST API support
+
+---
+
+# 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit changes
+4. Push to your branch
+5. Open a Pull Request
+
+---
+
+# 📜 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+# 👨‍💻 Author
+
+**Krish Patel**
+
+GitHub:
+https://github.com/10kri0
+
+---
+
+⭐ If you like this project, please **star the repository**.
